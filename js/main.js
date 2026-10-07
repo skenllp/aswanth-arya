@@ -590,4 +590,264 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   })();
 
+  /* ---------------------------------------------------------
+     12 · RSVP controller
+     --------------------------------------------------------- */
+  (function initRsvp() {
+    var form = document.getElementById('rsvpForm');
+    var successView = document.getElementById('rsvpSuccessView');
+    if (!form || !successView) return;
+
+    var nameInput = document.getElementById('rsvpName');
+    var phoneInput = document.getElementById('rsvpPhone');
+    var notesInput = document.getElementById('rsvpNotes');
+    var attendingFields = document.getElementById('attendingFields');
+    var submitBtn = document.getElementById('rsvpSubmitBtn');
+    var submitText = document.getElementById('rsvpSubmitText');
+    var nameError = document.getElementById('nameError');
+    var eventError = document.getElementById('eventError');
+    var editBtn = document.getElementById('rsvpEditBtn');
+    var summaryBox = document.getElementById('rsvpSummaryBox');
+    var calBtn = document.getElementById('rsvpCalendarBtn');
+    var waBtn = document.getElementById('rsvpWaConfirmBtn');
+    var successTitle = document.getElementById('rsvpSuccessTitle');
+    var successLead = document.getElementById('rsvpSuccessLead');
+
+    var attendanceRadios = form.elements['attendance'];
+    var guestCountRadios = form.elements['guestCount'];
+    var eventCheckboxes = form.elements['events'];
+
+    var STORAGE_KEY = 'aswanth_arya_wedding_rsvp';
+
+    function getAttendanceValue() {
+      if (!attendanceRadios) return 'attending';
+      for (var i = 0; i < attendanceRadios.length; i++) {
+        if (attendanceRadios[i].checked) return attendanceRadios[i].value;
+      }
+      return 'attending';
+    }
+
+    function getGuestCountValue() {
+      if (!guestCountRadios) return '2';
+      for (var i = 0; i < guestCountRadios.length; i++) {
+        if (guestCountRadios[i].checked) return guestCountRadios[i].value;
+      }
+      return '2';
+    }
+
+    function getSelectedEvents() {
+      var evts = [];
+      if (!eventCheckboxes) return evts;
+      if (typeof eventCheckboxes.length === 'undefined') {
+        if (eventCheckboxes.checked) evts.push(eventCheckboxes.value);
+      } else {
+        for (var i = 0; i < eventCheckboxes.length; i++) {
+          if (eventCheckboxes[i].checked) evts.push(eventCheckboxes[i].value);
+        }
+      }
+      return evts;
+    }
+
+    function syncAttendanceUi() {
+      var val = getAttendanceValue();
+      var isAttending = (val === 'attending');
+
+      if (attendingFields) {
+        if (isAttending) {
+          attendingFields.classList.remove('is-collapsed');
+        } else {
+          attendingFields.classList.add('is-collapsed');
+        }
+      }
+
+      if (submitText) {
+        submitText.textContent = isAttending ? 'Confirm RSVP' : 'Send Blessings';
+      }
+
+      if (notesInput) {
+        notesInput.placeholder = isAttending
+          ? 'Share a heartfelt blessing or message for Aswanth & Arya...'
+          : 'Send your warm wishes and blessings for the couple...';
+      }
+
+      if (eventError) eventError.classList.remove('is-visible');
+    }
+
+    if (attendanceRadios) {
+      for (var i = 0; i < attendanceRadios.length; i++) {
+        attendanceRadios[i].addEventListener('change', syncAttendanceUi);
+      }
+    }
+
+    /* Guest count pill style sync */
+    var guestPills = document.querySelectorAll('.guest-pill input');
+    Array.prototype.forEach.call(guestPills, function (inp) {
+      inp.addEventListener('change', function () {
+        Array.prototype.forEach.call(guestPills, function (p) {
+          var pillLabel = p.closest('.guest-pill');
+          if (pillLabel) pillLabel.classList.toggle('is-active', p.checked);
+        });
+      });
+    });
+
+    /* Event checkbox visual box sync */
+    var evtCheckInputs = document.querySelectorAll('.event-check input');
+    Array.prototype.forEach.call(evtCheckInputs, function (inp) {
+      inp.addEventListener('change', function () {
+        var card = inp.closest('.event-check');
+        if (card) card.classList.toggle('is-checked', inp.checked);
+        if (eventError) eventError.classList.remove('is-visible');
+      });
+    });
+
+    if (nameInput) {
+      nameInput.addEventListener('input', function () {
+        if (nameInput.value.trim()) {
+          nameInput.classList.remove('is-invalid');
+          if (nameError) nameError.classList.remove('is-visible');
+        }
+      });
+    }
+
+    function renderSummary(data) {
+      if (!summaryBox) return;
+      var isAttending = data.attendance === 'attending';
+
+      var html = '<dl class="rsvp-sum-list">';
+      html += '<div class="rsvp-sum-row"><dt>Guest</dt><dd>' + escapeHtml(data.name) + '</dd></div>';
+      html += '<div class="rsvp-sum-row"><dt>Status</dt><dd>' + (isAttending ? '✓ Joyfully Attending' : 'Celebrating in Spirit') + '</dd></div>';
+
+      if (isAttending) {
+        html += '<div class="rsvp-sum-row"><dt>Party Size</dt><dd>' + escapeHtml(data.guestCount) + (data.guestCount === '1' ? ' Guest' : ' Guests') + '</dd></div>';
+        if (data.events && data.events.length) {
+          html += '<div class="rsvp-sum-row"><dt>Events</dt><dd>' + escapeHtml(data.events.join(', ')) + '</dd></div>';
+        }
+      }
+
+      if (data.phone) {
+        html += '<div class="rsvp-sum-row"><dt>Contact</dt><dd>' + escapeHtml(data.phone) + '</dd></div>';
+      }
+
+      if (data.notes) {
+        html += '<div class="rsvp-sum-row"><dt>Wishes</dt><dd style="font-style:italic;">"' + escapeHtml(data.notes) + '"</dd></div>';
+      }
+
+      html += '</dl>';
+      summaryBox.innerHTML = html;
+
+      if (successTitle) {
+        successTitle.textContent = isAttending ? 'We are Delighted!' : 'Thank You Warmly!';
+      }
+      if (successLead) {
+        successLead.textContent = isAttending
+          ? 'Thank you, ' + escapeHtml(data.name.split(' ')[0] || data.name) + '! Your gracious presence will make our wedding truly memorable.'
+          : 'Thank you for your warm thoughts and prayers, ' + escapeHtml(data.name.split(' ')[0] || data.name) + '. You will be in our hearts!';
+      }
+
+      /* Configure Google Calendar link */
+      if (calBtn) {
+        if (isAttending) {
+          var calUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+            '&text=' + encodeURIComponent('Wedding of Dr. Aswanth & Adv. Arya') +
+            '&dates=20261121T060000Z/20261121T153000Z' +
+            '&details=' + encodeURIComponent('With the blessings of Almighty, Dr. Aswanth & Adv. Arya invite you to their wedding.\n\nMuhurtham: 11:30 AM – 11:50 AM at Geetham Convention Centre, Adoor.\nReception: 5:00 PM onwards at St. Gregorios Parish Hall, Ambalathumkala.') +
+            '&location=' + encodeURIComponent('Geetham Convention Centre, Adoor, Kerala');
+          calBtn.href = calUrl;
+          calBtn.style.display = 'inline-flex';
+        } else {
+          calBtn.style.display = 'none';
+        }
+      }
+
+      /* Configure WhatsApp message link */
+      if (waBtn) {
+        var waMsg = 'Namaste! Here is my RSVP for the wedding of Dr. Aswanth & Adv. Arya (21 Nov 2026):\n\n' +
+          '• Name: ' + data.name + '\n' +
+          '• Status: ' + (isAttending ? 'Attending with joy' : 'Sending blessings from afar') + '\n';
+        if (isAttending) {
+          waMsg += '• Guests: ' + data.guestCount + '\n';
+          waMsg += '• Events: ' + (data.events ? data.events.join(' & ') : 'Both') + '\n';
+        }
+        if (data.notes) {
+          waMsg += '• Message: ' + data.notes + '\n';
+        }
+        waBtn.href = 'https://api.whatsapp.com/send?phone=919747696039&text=' + encodeURIComponent(waMsg);
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function showSuccess(data) {
+      renderSummary(data);
+      form.hidden = true;
+      successView.hidden = false;
+
+      var card = document.getElementById('rsvpCard');
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function showForm() {
+      successView.hidden = true;
+      form.hidden = false;
+      if (nameInput) nameInput.focus();
+    }
+
+    if (editBtn) {
+      editBtn.addEventListener('click', showForm);
+    }
+
+    /* Check for existing stored RSVP */
+    try {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        var parsed = JSON.parse(saved);
+        if (parsed && parsed.name) {
+          if (nameInput) nameInput.value = parsed.name || '';
+          if (phoneInput) phoneInput.value = parsed.phone || '';
+          if (notesInput) notesInput.value = parsed.notes || '';
+
+          if (attendanceRadios) {
+            for (var a = 0; a < attendanceRadios.length; a++) {
+              attendanceRadios[a].checked = (attendanceRadios[a].value === parsed.attendance);
+            }
+          }
+
+          if (guestCountRadios) {
+            for (var g = 0; g < guestCountRadios.length; g++) {
+              guestCountRadios[g].checked = (guestCountRadios[g].value === parsed.guestCount);
+              var p = guestCountRadios[g].closest('.guest-pill');
+              if (p) p.classList.toggle('is-active', guestCountRadios[g].checked);
+            }
+          }
+
+          if (parsed.events && eventCheckboxes) {
+            for (var c = 0; c < eventCheckboxes.length; c++) {
+              var isEvtChecked = parsed.events.indexOf(eventCheckboxes[c].value) !== -1;
+              eventCheckboxes[c].checked = isEvtChecked;
+              var ec = eventCheckboxes[c].closest('.event-check');
+              if (ec) ec.classList.toggle('is-checked', isEvtChecked);
+            }
+          }
+
+          syncAttendanceUi();
+          showSuccess(parsed);
+        }
+      }
+    } catch (e) {
+      /* ignore */
+    }
+
+    syncAttendanceUi();
+  })();
+
 })();

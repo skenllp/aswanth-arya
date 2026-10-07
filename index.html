@@ -132,6 +132,26 @@
         <path d="M32 22.5c-2.6-3-2.6-7 0-10 2.6 3 2.6 7 0 10z" />
         <path d="M25 55h14" />
       </symbol>
+
+      <symbol id="i-check" viewBox="0 0 64 64">
+        <path d="M14 34l12 12 24-26" />
+      </symbol>
+
+      <symbol id="i-heart" viewBox="0 0 64 64">
+        <path d="M32 52S14 39 14 26a10 10 0 0118-6 10 10 0 0118 6c0 13-18 26-18 26z" />
+      </symbol>
+
+      <symbol id="i-users" viewBox="0 0 64 64">
+        <circle cx="24" cy="22" r="7" />
+        <path d="M11 47c0-6.6 5.8-12 13-12s13 5.4 13 12" />
+        <circle cx="43" cy="21" r="5.5" />
+        <path d="M42 33c4.5 0 9 3.5 9 8.5" />
+      </symbol>
+
+      <symbol id="i-whatsapp" viewBox="0 0 64 64">
+        <path d="M32 11c-11.6 0-21 9.4-21 21 0 4.1 1.2 7.9 3.2 11.2L11 53l10.1-2.6c3.2 1.7 6.9 2.6 10.9 2.6 11.6 0 21-9.4 21-21S43.6 11 32 11z" />
+        <path d="M24 24.5c-.6 0-1.3.3-1.8 1-.7.9-2.2 2.2-2.2 5.3s2.3 6.1 2.6 6.5c.3.4 4.5 7 11 9.5 5.5 2.1 6.6 1.4 7.8 1.3 1.2-.1 3.8-1.6 4.3-3.1.5-1.5.5-2.8.4-3.1-.2-.3-.6-.5-1.3-.8-1.5-.7-4.3-2.1-5-2.4-.7-.2-1.2-.3-1.7.5-.5.8-1.9 2.4-2.3 2.9-.4.4-.8.5-1.5.1-.7-.3-2.9-1.1-5.5-3.4-2-1.8-3.4-4-3.8-4.7-.4-.7 0-1.1.3-1.4.3-.3.7-.8 1-1.2.3-.4.5-.7.7-1.1.2-.4.1-.8 0-1.1-.2-.3-1.5-3.8-2.1-5.1-.6-1.4-1.2-1.2-1.7-1.2z" />
+      </symbol>
     </defs>
   </svg>
 
@@ -327,6 +347,15 @@
           <div class="cd-unit"><span class="cd-n" id="cdM">--</span><span class="cd-l">Minutes</span></div>
           <span class="cd-sep" aria-hidden="true"></span>
           <div class="cd-unit"><span class="cd-n" id="cdS">--</span><span class="cd-l">Seconds</span></div>
+        </div>
+
+        <div class="details-cta reveal" data-delay="3">
+          <a class="btn btn--gold" href="#rsvp">
+            <svg class="ico">
+              <use href="#i-calendar"></use>
+            </svg>
+            <span>RSVP for the Wedding</span>
+          </a>
         </div>
 
       </div>
@@ -857,6 +886,229 @@
 
 
 
+  <!-- ---------- RSVP ---------- -->
+    <section id="rsvp" class="scene scene--flow scene--dark">
+      <img class="section-bg" src="assets/images/decorations/wash-dark.svg" alt="" loading="lazy" decoding="async">
+      <div class="section-overlay" aria-hidden="true"></div>
+      <div class="section-content">
+        <div class="sec-head reveal">
+          <!-- <p class="kicker">സാന്നിധ്യം അറിയിക്കുക</p> -->
+          <h2 class="sec-title">RSVP</h2>
+          <div class="divider divider--light" aria-hidden="true">
+            <span class="divider-line"></span>
+            <svg class="ico" aria-hidden="true">
+              <use href="#i-lotus"></use>
+            </svg>
+            <span class="divider-line"></span>
+          </div>
+          <p class="sec-note reveal" data-delay="1">
+            We cordially invite you and your family to celebrate our special day with us.
+            Kindly respond by <strong>10 November 2026</strong> so we may make gracious arrangements for your arrival.
+          </p>
+        </div>
+
+        <div class="rsvp-card reveal" data-delay="2" id="rsvpCard">
+          <span class="rsvp-card__roof" aria-hidden="true"></span>
+
+          <div class="rsvp-card__body">
+            <div class="rsvp-crest" aria-hidden="true">
+              <svg class="ico"><use href="#i-kalasham"></use></svg>
+            </div>
+
+            <p class="rsvp-sub">Join Our Celebration</p>
+            <h3 class="rsvp-heading">Aswanth &amp; Arya</h3>
+            <span class="rsvp-date-badge">Saturday, 21 November 2026 · Adoor</span>
+
+            <!-- RSVP Form -->
+            <form id="rsvpForm" class="rsvp-form" novalidate>
+              
+              <!-- Attendance Segmented Buttons -->
+              <div class="form-group">
+                <label class="form-label form-label--center">Will you be attending? <span class="req">*</span></label>
+                <div class="rsvp-attend-options">
+                  <label class="rsvp-choice" id="choiceAttending">
+                    <input type="radio" name="attendance" value="attending" checked>
+                    <span class="rsvp-choice__card">
+                      <span class="rsvp-choice__icon"><svg class="ico"><use href="#i-check"></use></svg></span>
+                      <span class="rsvp-choice__title">Joyfully Accept</span>
+                      <!-- <span class="rsvp-choice__ml">സന്തോഷത്തോടെ പങ്കെടുക്കുന്നു</span> -->
+                    </span>
+                  </label>
+
+                  <label class="rsvp-choice" id="choiceDeclining">
+                    <input type="radio" name="attendance" value="declining">
+                    <span class="rsvp-choice__card">
+                      <span class="rsvp-choice__icon"><svg class="ico"><use href="#i-heart"></use></svg></span>
+                      <span class="rsvp-choice__title">Regretfully Decline</span>
+                      <!-- <span class="rsvp-choice__ml">അകലെനിന്ന് ആശംസകൾ</span> -->
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Guest Name -->
+              <div class="form-group">
+                <label class="form-label" for="rsvpName">
+                  Your Full Name <span class="req">*</span>
+                </label>
+                <div class="input-wrap">
+                  <input type="text" id="rsvpName" name="name" class="form-input" placeholder="e.g. Dr. Rajesh Kumar &amp; Family" required autocomplete="name">
+                </div>
+                <span class="form-error" id="nameError">Please enter your name so we know who is attending.</span>
+              </div>
+
+              <!-- Phone / WhatsApp -->
+              <!-- <div class="form-group">
+                <label class="form-label" for="rsvpPhone">
+                  Mobile / WhatsApp Number
+                </label>
+                <div class="input-wrap">
+                  <input type="tel" id="rsvpPhone" name="phone" class="form-input" placeholder="e.g. 9876543210" autocomplete="tel">
+                </div>
+                <span class="form-hint">For sharing ceremony updates, parking &amp; directions.</span>
+              </div> -->
+
+              <!-- Collapsible attending-only block -->
+              <div class="rsvp-attending-fields" id="attendingFields">
+                
+                <!-- Number of Guests -->
+                <div class="form-group">
+                  <label class="form-label">Total Number of Guests</label>
+                  <div class="guest-counter" id="guestCounter">
+                    <label class="guest-pill">
+                      <input type="radio" name="guestCount" value="1">
+                      <span>1</span>
+                    </label>
+                    <label class="guest-pill">
+                      <input type="radio" name="guestCount" value="2" checked>
+                      <span>2</span>
+                    </label>
+                    <label class="guest-pill">
+                      <input type="radio" name="guestCount" value="3">
+                      <span>3</span>
+                    </label>
+                    <label class="guest-pill">
+                      <input type="radio" name="guestCount" value="4">
+                      <span>4</span>
+                    </label>
+                    <label class="guest-pill">
+                      <input type="radio" name="guestCount" value="5+">
+                      <span>5+</span>
+                    </label>
+                  </div>
+                  <!-- <span class="form-hint">Including yourself and attending family members.</span> -->
+                </div>
+
+                <!-- Event checkboxes -->
+                <div class="form-group">
+                  <label class="form-label">Events You Will Attend <span class="req">*</span></label>
+                  <div class="events-checklist">
+                    <label class="event-check">
+                      <input type="checkbox" name="events" value="Wedding Ceremony" checked>
+                      <span class="event-check__box"><svg class="ico"><use href="#i-check"></use></svg></span>
+                      <span class="event-check__body">
+                        <span class="event-check__title">Wedding Ceremony &amp; Muhurtham</span>
+                        <span class="event-check__desc">11:30 AM – 11:50 AM · Geetham Convention Centre, Adoor</span>
+                      </span>
+                    </label>
+
+                    <label class="event-check">
+                      <input type="checkbox" name="events" value="Reception" checked>
+                      <span class="event-check__box"><svg class="ico"><use href="#i-check"></use></svg></span>
+                      <span class="event-check__body">
+                        <span class="event-check__title">Wedding Reception</span>
+                        <span class="event-check__desc">5:00 PM onwards · St. Gregorios Parish Hall, Ambalathumkala</span>
+                      </span>
+                    </label>
+                  </div>
+                  <span class="form-error" id="eventError">Please select at least one event you will attend.</span>
+                </div>
+
+              </div>
+
+              <!-- Message / Wishes -->
+              <div class="form-group">
+                <label class="form-label" for="rsvpNotes">
+                  Blessings &amp; Wishes for the Couple <span class="optional">(Optional)</span>
+                </label>
+                <div class="input-wrap">
+                  <textarea id="rsvpNotes" name="notes" class="form-textarea" rows="3" placeholder="Share a heartfelt blessing or message for Aswanth &amp; Arya..."></textarea>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="rsvp-action">
+                <button type="submit" class="btn btn--gold rsvp-btn-submit" id="rsvpSubmitBtn">
+                  <svg class="ico"><use href="#i-jasmine"></use></svg>
+                  <span id="rsvpSubmitText">Confirm RSVP</span>
+                </button>
+              </div>
+
+            </form>
+
+            <!-- Success / Confirmation State (Hidden initially) -->
+            <div id="rsvpSuccessView" class="rsvp-success" hidden>
+              <div class="rsvp-success__icon" aria-hidden="true">
+                <svg class="ico"><use href="#i-lotus"></use></svg>
+              </div>
+              <h4 class="rsvp-success__title" id="rsvpSuccessTitle">Thank You!</h4>
+              <p class="rsvp-success__lead" id="rsvpSuccessLead">
+                Your response has been lovingly recorded.
+              </p>
+
+              <div class="rsvp-summary-card" id="rsvpSummaryBox">
+                <!-- Dynamically filled -->
+              </div>
+
+              <div class="rsvp-success__actions">
+                <a id="rsvpCalendarBtn" class="btn btn--gold" href="#" target="_blank" rel="noopener">
+                  <svg class="ico"><use href="#i-calendar"></use></svg>
+                  <span>Add to Calendar</span>
+                </a>
+
+                <a id="rsvpWaConfirmBtn" class="btn btn--ghost" href="#" target="_blank" rel="noopener">
+                  <svg class="ico"><use href="#i-whatsapp"></use></svg>
+                  <span>Share on WhatsApp</span>
+                </a>
+              </div>
+
+              <button type="button" class="rsvp-edit-link" id="rsvpEditBtn">
+                Need to change your response? Click here to update
+              </button>
+            </div>
+
+            <!-- Divider before direct contact -->
+            <div class="tc-rule" aria-hidden="true"></div>
+
+            <!-- Alternative Quick RSVP via WhatsApp & Phone -->
+            <div class="rsvp-direct">
+              <p class="rsvp-direct__title">Or RSVP directly with the family</p>
+              <div class="rsvp-direct__links">
+                <a class="chip chip--wa" target="_blank" rel="noopener"
+                  href="https://api.whatsapp.com/send?phone=919747696039&amp;text=Namaste!%20I%20would%20like%20to%20RSVP%20for%20the%20wedding%20of%20Aswanth%20%26%20Arya%20on%20Saturday%2C%2021%20November%202026.">
+                  <svg class="ico"><use href="#i-whatsapp"></use></svg>
+                  <span>WhatsApp RSVP</span>
+                </a>
+                <a class="chip" href="tel:+919747696039">
+                  <svg class="ico"><use href="#i-phone"></use></svg>
+                  <span>9747696039</span>
+                </a>
+                <a class="chip" href="tel:+919400704271">
+                  <svg class="ico"><use href="#i-phone"></use></svg>
+                  <span>9400704271</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <span class="rsvp-card__base" aria-hidden="true"></span>
+        </div>
+
+      </div>
+    </section>
+
+
     <!-- ---------- THANK YOU ---------- -->
     <section id="thankyou" class="scene scene--flow scene--finale">
       <img class="section-bg" src="assets/images/decorations/wash-finale.svg" alt="" loading="lazy" decoding="async">
@@ -958,6 +1210,66 @@
 
   <script src="js/particles.js" defer></script>
   <script src="js/main.js" defer></script>
+
+  <script>
+    document.getElementById('rsvpForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var submitBtn = document.getElementById('rsvpSubmitBtn');
+      var submitText = document.getElementById('rsvpSubmitText');
+      submitBtn.disabled = true;
+      submitText.textContent = 'Sending...';
+
+      var attendanceEl = document.querySelector('input[name="attendance"]:checked');
+      var guestEl = document.querySelector('input[name="guestCount"]:checked');
+      var eventEls = document.querySelectorAll('input[name="events"]:checked');
+      var events = Array.prototype.map.call(eventEls, function (el) { return el.value; });
+      var phoneEl = document.getElementById('rsvpPhone');
+
+      var payload = {
+        name: document.getElementById('rsvpName').value,
+        phone: phoneEl ? phoneEl.value : '',
+        attendance: attendanceEl ? attendanceEl.value : '',
+        guestCount: guestEl ? guestEl.value : '',
+        events: events,
+        notes: document.getElementById('rsvpNotes').value
+      };
+
+      fetch('https://script.google.com/macros/s/AKfycbzE0J9lnzIBqKh1ygzwdqXJPkuAPaCIzujUAVXT7u4JLWMpUY9T7p2HIBgOcJj4c7yGhw/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },   // avoids CORS preflight
+        body: JSON.stringify(payload)
+      })
+      .then(function (res) { return res.json(); })
+      .then(function () {
+        document.getElementById('rsvpForm').hidden = true;
+        document.getElementById('rsvpSuccessView').hidden = false;
+
+        var summaryBox = document.getElementById('rsvpSummaryBox');
+        if (summaryBox) {
+          summaryBox.innerHTML =
+            '<strong>' + payload.name + '</strong><br>' +
+            (payload.attendance === 'attending'
+              ? payload.guestCount + ' guest(s) · ' + events.join(', ')
+              : 'Sending love from afar');
+        }
+
+        try {
+          localStorage.setItem('aswanth_arya_wedding_rsvp', JSON.stringify(payload));
+        } catch (e) {}
+
+        var card = document.getElementById('rsvpCard');
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      })
+      .catch(function () {
+        alert('Something went wrong. Please try again.');
+        submitBtn.disabled = false;
+        submitText.textContent = 'Confirm RSVP';
+      });
+    });
+  </script>
 </body>
 
 </html>
