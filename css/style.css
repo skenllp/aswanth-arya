@@ -974,6 +974,9 @@ body:not(.is-revealed) #site *{animation-play-state:paused!important}
   max-width:min(1180px,100%);
   margin-inline:auto;
 }
+/* two-photo gallery — pair sits side by side */
+#gallery .photo-wall-stage{max-width:min(940px,100%)}
+#gallery .photo-wall{columns:2;column-gap:clamp(20px,3.4vw,44px)}
 .photo-wall__fx{
   position:absolute;inset:0;
   pointer-events:none;z-index:1;overflow:hidden;
@@ -1448,6 +1451,7 @@ body.finale-particles .finale-fallback{opacity:0}
 }
 @media (max-width:520px){
   .photo-wall{columns:1}
+  #gallery .photo-wall{columns:1}
   .photo-wall-stage{max-width:420px}
   .photo-card--sm,
   .photo-card--md,
